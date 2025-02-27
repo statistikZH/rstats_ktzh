@@ -19,4 +19,4 @@ __Programm__
 Automatisierte Textkategorisierung zurückgewiesener elektronischer Behandlungsabrechnungen mit Machine Learning Methods
 
 ### 2. Von losen Zeilen Code zum ersten Package (STAT)
-Ein Arbeitsbericht wie Package-Workflows und Quarto-Reports im kantonalen Coporate Design auch mit wenig Vorwissen einfach umgesetzt werden können 
+Ein Erfahrungsbericht wie Package-Workflows und Quarto-Reports im kantonalen Coporate Design auch mit wenig Vorwissen einfach umgesetzt werden können 
