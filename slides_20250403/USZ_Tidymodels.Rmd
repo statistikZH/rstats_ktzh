@@ -1,0 +1,131 @@
+
+## Based on: https://smltar.com/ & https://www.tmwr.org/
+
+# 1. Datenimport
+
+```{r}
+rm(list = ls())
+t1 <- Sys.time()
+library(tidyverse)
+library(tidymodels)
+data(ames)
+```
+
+# 2. Datenaufbereitung
+
+```{r}
+tidymodels_prefer()
+ames <- ames %>%
+  mutate(Sale_Price = log10(Sale_Price))
+```
+
+# 3. Split
+
+```{r}
+set.seed(123)
+ames_split <- initial_split(ames, prop = 0.80, strata = Sale_Price)
+
+ames_train <- training(ames_split)
+ames_test  <-  testing(ames_split)
+```
+
+# 4. Recipe 
+
+```{r}
+linear_reg() %>%
+  set_engine("lm") %>%
+  translate()
+```
+
+```{r}
+ames_rec <-
+  recipe(Sale_Price ~ Longitude + Latitude,
+         data = ames_train)
+```
+
+# 5. Cross-Validation
+
+```{r}
+set.seed(123)
+ames_folds <- vfold_cv(ames_train)
+```
+
+# 6. Model
+
+```{r}
+lm_model <- 
+  linear_reg() %>% 
+  set_engine("lm")
+```
+
+# 7. Workflow
+
+```{r}
+lm_wflow <- 
+  workflow() %>% 
+  add_model(lm_model)%>% 
+  add_recipe(ames_rec)
+
+lm_wflow
+```
+
+```{r}
+lm_fit <- fit(lm_wflow, ames_train)
+lm_fit
+```
+
+```{r}
+predict(lm_fit, ames_test %>% slice(1:3))
+```
+
+# 8. Quality Analysis
+
+```{r}
+plot_data <- data.frame(predicted_data = predict(lm_fit, ames_test),
+                        actual_data = ames_test$Sale_Price)
+
+ggplot(plot_data, aes(x=.pred, y=actual_data)) +
+  geom_point() +
+  geom_abline(intercept =0, slope=1, color = "darkgreen") + 
+  geom_smooth(method=lm , color="red", se=TRUE) +
+  theme_bw()
+```
+
+# 9 Finalize & Save Workflow 
+
+```{r}
+final_fitted <- last_fit(lm_wflow, ames_split)
+collect_metrics(final_fitted)
+```
+
+```{r}
+saveRDS(final_fitted, file = "Filename.rds")
+t2 <- Sys.time()
+```
+
+# 10 Predict
+
+```{r}
+t3 <- Sys.time()
+final_fitted <- readRDS(file = "Filename.rds") # Import WF
+
+Pred_ames <- final_fitted %>%
+  extract_workflow() %>%
+  predict(ames_test) # or newly imported data
+
+Pred_ames
+t4 <- Sys.time()
+```
+
+## Anmerkung Geschwindigkeit
+
+```{r}
+cat("Trainingsdauer:\n",
+    t2-t1,
+    "\nPrädiktionszeit:\n",
+    t4-t3,
+    "\nBeschleunigungsfaktor für neue Prädiktionen bei vorhandenem WF:\n",
+    as.numeric(t2-t1)/as.numeric(t4-t3),
+    sep="")
+```
+
