@@ -20,7 +20,7 @@ Automatisierte Textkategorisierung zurückgewiesener elektronischer Behandlungsa
 
 [Folien]
 
-[Code-Beispiel](https://github.com/statistikZH/rstats_ktzh/blob/a3ec4dd59fe546463a3e106e3398763814f88422/slides_20250403/USZ_Tidymodels.html)
+[Code-Beispiel](https://github.com/statistikZH/rstats_ktzh/tree/master/slides_20250403/USZ_Tidymodels.html)
 
 ### 2. Von losen Zeilen Code zum ersten Package (STAT)
 Ein Erfahrungsbericht wie Package-Workflows und Quarto-Reports im kantonalen Coporate Design auch mit wenig Vorwissen einfach umgesetzt werden können 
