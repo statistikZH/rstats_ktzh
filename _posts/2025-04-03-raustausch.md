@@ -18,7 +18,7 @@ __Programm__
 ### 1. R @USZ
 Automatisierte Textkategorisierung zurückgewiesener elektronischer Behandlungsabrechnungen mit Machine Learning Methods
 
-[Folien](https://github.com/statistikZH/rstats_ktzh/tree/master/slides_20250403/USZ_presentation.html)
+[Folien](https://github.com/statistikZH/rstats_ktzh/tree/master/slides_20250403/USZ_presentation.pdf)
 
 [Code-Beispiel](https://github.com/statistikZH/rstats_ktzh/tree/master/slides_20250403/USZ_Tidymodels.html)
 
